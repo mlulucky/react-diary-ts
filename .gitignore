@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# vscode 폴더 제외, 안에 파일만 git 저장소에 포함
+.vscode
+
 # testing
 /coverage
 
@@ -21,3 +24,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# zero-installs
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
