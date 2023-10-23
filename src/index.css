@@ -1,13 +1,21 @@
+/* index.css : 전역 스타일 정의(폰트, 배경색, 마진, 패딩 등..) */
+
+/* 구글폰트 불러오기 */
+@import url('https://fonts.googleapis.com/css2?family=Gaegu&family=Gamja+Flower&family=Nanum+Pen+Script&family=Stylish&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+	background-color: #f6f6f6;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* 최소높이 설정 */
+	min-height: 100vh; 
+
+	font-family: 'Gaegu', sans-serif,'Nanum Pen Script', cursive, 
+	'Stylish', serif, 'Gamja Flower', sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}

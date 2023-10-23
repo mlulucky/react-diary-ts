@@ -1,38 +1,74 @@
+/* App.css : App 컴포넌트 및 하위 컴포넌트들 스타일 정의, 레이아웃 (헤더, 푸터, 메인레이아웃 등..) */
+
+/* 반응형 너비 css */
+@media (min-width: 650px) { /* 최소너비 650 이상인 경우 적용(650px ~ ) */
+	.App {
+		width: 640px;
+	}
+}
+
+@media(max-width: 650px) { /* 최대너비가 650 인 경우 적용 (0 ~ 650px) */
+	.App {
+		width: 90vw;
+	}
+}
+
+#root {
+	background-color: #fff;
+	box-shadow: rgba(100,100,111,0.2) 0px 7px 30px 0px;
+}
+
 .App {
-  text-align: center;
+	min-height: 100vh;
+	padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.MyButton {
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	font-family: 'Gaegu', sans-serif;
+	font-weight: bold;
+	cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.MyButton_done {
+	background-color: rgb(39, 215, 62);
+	color: #fff;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.MyButton_default {
+	background-color: #f6f6f6;
 }
 
-.App-link {
-  color: #61dafb;
+.MyButton_remove {
+	background-color: rgb(237, 81, 81);
+	color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+header {
+	border: 1px solid #ddd;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	padding: 10px;
+}
+header > div {
+	display: flex;
+}
+.head_btn_left,
+.head_btn_right {
+	width: 25%;
+}
+.head_btn_left {
+	justify-content: start;
+}
+.head_btn_right {
+	justify-content: end;
+}
+
+.head_text {
+	width: 50%;
+	font-size: 20px;
+	justify-content: center;
 }
