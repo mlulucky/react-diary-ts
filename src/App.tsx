@@ -7,24 +7,27 @@ import Edit from "./pages/Edit";
 import New from "./pages/New";
 import React from "react";
 
-// state: 상태 action: 상태변화 객체(dispatch 가 인자로 전달한 객체) 
+// state: 상태 action: 상태변화 객체(dispatch 가 인자로 전달한 객체)
 // dispatch 는 상태변화에 필요한 액션 타입과, 액션에 필요한 데이터를 전달한다. (action 객체(상태변화))
 
-type StateType = { // 일기데이터 배열의 요소 타입
-	id: number;
-	date: number;
-	content: string;
-	emotion: number;
-}
+export type StateType = {
+  // 일기데이터 배열의 요소 타입
+  id: number;
+  date: number;
+  content: string;
+  emotion: number;
+};
 // state 는 일기 데이터, 즉 배열이다. => StateType[]
 
-type ActionType =  // action 객체는 타입과, 상태변화에 필요한 데이터를 갖는다.
-	| {type: "INIT", data: StateType[]}
-	| {type: "CREATE", data: StateType}
-	| {type: "REMOVE", targetId: number}
-	| {type: "EDIT", data: StateType}
+type ActionType = // action 객체는 타입과, 상태변화에 필요한 데이터를 갖는다.
 
-const reducer = (state : StateType[], action: ActionType): StateType[] => {
+    | { type: "INIT"; data: StateType[] }
+    | { type: "CREATE"; data: StateType }
+    | { type: "REMOVE"; targetId: number }
+    | { type: "EDIT"; data: StateType };
+
+const reducer = (state: StateType[], action: ActionType): StateType[] => {
+  // reducer 함수 : 새로운 상태를 반환
   let newState = [];
   switch (action.type) {
     case "INIT": {
@@ -51,21 +54,56 @@ const reducer = (state : StateType[], action: ActionType): StateType[] => {
 };
 
 // Context 객체 생성
-// 다른 컴포넌트에서 Context 로 전달받은 데이터를 사용하려면 해당 컴포넌트에서 컨텍스트 객체를 import 해야하므로, export 를 해준다!  
+// 다른 컴포넌트에서 Context 로 전달받은 데이터를 사용하려면 해당 컴포넌트에서 컨텍스트 객체를 import 해야하므로, export 를 해준다!
 export const DiaryStateContext = React.createContext<StateType[]>([]);
-export const DiaryDispatchContext = React.createContext({  // dispatch 를 실행하는 함수 객체들을 인자로 받아서, Context.Provider 의 props 로 전달
-	onCreate: (data: Omit<StateType, 'id'>) => {}, // Omit<타입, 제외할필드> : 타입에서 일부 필드를 제외한 새로운 타입 // 빈 중괄호. 반환타입X 의미 JS 문법 // () => void 는 타입스크립트 문법
-	onRemove: (targetId: number) => {},
-	onEdit: (data: StateType) => {}
+export const DiaryDispatchContext = React.createContext({
+  // dispatch 를 실행하는 함수 객체들을 인자로 받아서, Context.Provider 의 props 로 전달
+  onCreate: (data: Omit<StateType, "id">) => {}, // Omit<타입, 제외할필드> : 타입에서 일부 필드를 제외한 새로운 타입 // 빈 중괄호. 반환타입X 의미 JS 문법 // () => void 는 타입스크립트 문법
+  onRemove: (targetId: number) => {},
+  onEdit: (data: StateType) => {},
 });
 
+const dummyData = [
+	{
+		id: 1,
+		date: 1698562548201, 
+		content: "일기1",
+		emotion: 1
+	},
+	{
+		id: 2,
+		date: 1698562548202, 
+		content: "일기2",
+		emotion: 2
+	},
+	{
+		id: 3,
+		date: 1698562548203, 
+		content: "일기3",
+		emotion: 3
+	},
+	{
+		id: 4,
+		date: 1698562548204, 
+		content: "일기4",
+		emotion: 4
+	},
+	{
+		id: 5,
+		date: 1698562548205, 
+		content: "일기5",
+		emotion: 5
+	},
+];
+// console.log(new Date().getTime()); // 데이트타임의 밀리세컨즈 값
+
 function App() {
-	const initialData: StateType[] = []
-  const [data, dispatch] = useReducer(reducer, initialData);
+  const initialData: StateType[] = [];
+  const [data, dispatch] = useReducer(reducer, dummyData);
 
   // dispatch 함수
   const dataId = useRef(0);
-  const onCreate = ({date, content, emotion} : Omit<StateType, 'id'>) => {
+  const onCreate = ({ date, content, emotion }: Omit<StateType, "id">) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -82,7 +120,8 @@ function App() {
     dispatch({ type: "REMOVE", targetId });
   };
 
-  const onEdit = ({ id, date, content, emotion } : StateType) => { // 잘못된 예) 변수명과 타입을 혼동한다. targetId: number, date: number, content: string, emotion:numer
+  const onEdit = ({ id, date, content, emotion }: StateType) => {
+    // 잘못된 예) 변수명과 타입을 혼동한다. targetId: number, date: number, content: string, emotion:numer
     dispatch({
       type: "EDIT",
       data: { id, date: new Date(date).getTime(), content, emotion },
@@ -94,9 +133,11 @@ function App() {
   const env = process.env.PUBLIC_URL || ""; // 환경변수 없이 기본값 사용
   // process.env.PUBLIC_UR 환경변수가 있으면 그 값을 사용. 없으면 "" 을 할당
 
+	// dispatch({type: "INIT", data: dummyData})
+
   return (
     <DiaryStateContext.Provider value={data}>
-      <DiaryDispatchContext.Provider value={{onCreate, onRemove, onEdit}}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onRemove, onEdit }}>
         <BrowserRouter>
           <div className="App">
             App.js
