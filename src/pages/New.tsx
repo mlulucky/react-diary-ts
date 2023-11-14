@@ -1,7 +1,10 @@
+import DiaryEditor from '../components/DiaryEditor';
+
 const New = () => {
+
 	return (
 		<div>
-			<h1>이곳은 New 입니다.</h1>
+			<DiaryEditor />
 		</div>
 	)
 }
