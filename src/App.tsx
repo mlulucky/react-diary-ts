@@ -121,10 +121,9 @@ function App() {
   };
 
   const onEdit = ({ id, date, content, emotion }: StateType) => {
-    // 잘못된 예) 변수명과 타입을 혼동한다. targetId: number, date: number, content: string, emotion:numer
     dispatch({
       type: "EDIT",
-      data: { id, date: new Date(date).getTime(), content, emotion },
+      data: { id, date, content, emotion },
     });
   };
   // process.env 는 Node.js 에서 환경 변수에 접근하는데 사용되는 객체
@@ -133,18 +132,15 @@ function App() {
   const env = process.env.PUBLIC_URL || ""; // 환경변수 없이 기본값 사용
   // process.env.PUBLIC_UR 환경변수가 있으면 그 값을 사용. 없으면 "" 을 할당
 
-	// dispatch({type: "INIT", data: dummyData})
-
   return (
     <DiaryStateContext.Provider value={data}>
       <DiaryDispatchContext.Provider value={{ onCreate, onRemove, onEdit }}>
         <BrowserRouter>
           <div className="App">
-            App.js
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/diary/:id" element={<Diary />} />
-              <Route path="/edit" element={<Edit />} />
+              <Route path="/edit/:id" element={<Edit />} />
               <Route path="/new" element={<New />} />
             </Routes>
           </div>
@@ -158,7 +154,7 @@ function App() {
 // url 경로가 일치하는 컴포넌트가 없는 경우 라우트는 안보인다. => ex) /dflkja;sdlfj;a 경로입력시
 // 페이지가 바뀔때 변화하는 부분은 Route 안의 부분만
 
-// a 태그 이동은 MPA 이동, 즉 페이지가 새로고침되는 이동 (리액트의 SPA 특징 - (빠른 페이지 이동, 페이지 변환시 깜빡임x) x)
+// a 태그 이동은 MPA 이동, 즉 페이지가 새로고침되는 이동 (리액트의 SPA 특징 - (빠른 페이지 이동, 페이지 변환시 깜빡임x, 새로고침 x))
 // => a 태그는 SPA 페이지 외부로 이동할때 사용
 // <a href={'/diary'}>diary 로 이동</a>
 
