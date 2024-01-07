@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import DiaryEditor from "../components/DiaryEditor";
 import useDiary from "../hooks/useDiary";
 
 const Edit = () => {
 	const diary = useDiary();
-
+	useEffect(()=>{
+		const title = document.getElementsByTagName('title')[0];
+		title.innerHTML=`diary-${diary?.id}번 일기 수정`;
+	},[diary]);
+	
   if(!diary) {
 		return <div>로딩중입니다...</div>
 	}

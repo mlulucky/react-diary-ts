@@ -4,16 +4,22 @@ import MyHeader from "../components/MyHeader";
 import useDiary from "../hooks/useDiary";
 import { getCurDate } from "../util/getDate";
 import { emotionList } from "../util/emotionList";
+import { useEffect } from "react";
 
 const Diary = () => {
   const diary = useDiary();
   const navigate = useNavigate();
 
+	useEffect(()=>{
+		const title = document.getElementsByTagName('title')[0];
+		title.innerHTML=`diary-${diary?.id}번 일기`;
+	},[diary]);
+
   if (!diary) {
     return <div className="DiaryPage">로딩중입니다...</div>;
   } else {
     const emotionData = emotionList.find(
-      (item) => item.emotion_id === diary.id
+      (item) => item.emotion_id === diary.emotion
     );
     console.log("emotionData", emotionData);
     return (

@@ -2,8 +2,6 @@ import { useState, useContext, useEffect } from "react";
 import MyButton from "../components/MyButton";
 import MyHeader from "../components/MyHeader";
 import { DiaryStateContext, StateType } from "../App";
-import DiaryList from "../components/DiaryList";
-import ControlMenu from "../components/ControlMenu";
 import DiaryContainer from "../components/DiaryContainer";
 
 const Home = () => {
@@ -30,6 +28,11 @@ const Home = () => {
   };
 
   // 🍒 useEffect() 사용
+	useEffect(()=>{
+		const title = document.getElementsByTagName('title')[0];
+		title.innerHTML=`diary 홈`;
+	},[]);
+
   // curDate 날짜가 변경되는 경우에, 일기목록 diaryList 불러오기
   useEffect(() => {
     if (diaryList.length >= 1) {
