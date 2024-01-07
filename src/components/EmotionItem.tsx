@@ -1,3 +1,5 @@
+import React from "react";
+
 type EmotionItemProps = {
   emotion_id: number;
   emotion_img: string;
@@ -12,6 +14,9 @@ const EmotionItem = ({
   onClick,
 	isSelected
 }: EmotionItemProps) => {
+	// 컴포넌트 재렌더링 원인 체크
+	// useEffect(()=>{console.log("EmotionItem")},[onClick]);
+
   return (
     <div
       className={["EmotionItem", isSelected ? `EmotionItem_on_${emotion_id}` : "EmotionItem_off"].join(" ")}
@@ -25,4 +30,4 @@ const EmotionItem = ({
   );
 };
 
-export default EmotionItem;
+export default React.memo(EmotionItem);

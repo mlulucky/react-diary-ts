@@ -1,3 +1,5 @@
+import React from "react";
+
 type OptionListType = {
   value: string;
   name: string;
@@ -8,8 +10,13 @@ type ControlMenuType = {
   onChange: (value: string) => void;
   optionList: OptionListType[];
 };
-const ControlMenu = ({ value, onChange, optionList }: ControlMenuType) => {
-  return (
+const ControlMenu = React.memo(({ value, onChange, optionList }: ControlMenuType) => {
+  // 컴포넌트 재렌더링 원인 체크
+	// useEffect(()=>{
+	// 	console.log("ControlMenu");
+	// },[optionList]);
+
+	return (
     <select 
 			className="ControlMenu"
       value={value}
@@ -24,6 +31,6 @@ const ControlMenu = ({ value, onChange, optionList }: ControlMenuType) => {
       ))}
     </select>
   );
-};
+});
 
 export default ControlMenu;

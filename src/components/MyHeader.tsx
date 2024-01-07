@@ -1,4 +1,4 @@
-import MyButton, {ButtonProps} from './MyButton'
+import MyButton from './MyButton'
 
 type MyHeaderProps = {
 	leftChild? : React.ReactNode; // React 컴포넌트, 문자열, 숫자, 배열 등 거의 모든 것을 포함하는 넓은 타입
