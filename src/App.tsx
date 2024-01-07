@@ -1,5 +1,5 @@
 import "./App.css";
-import { useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Diary from "./pages/Diary";
 import Home from "./pages/Home";
@@ -50,6 +50,7 @@ const reducer = (state: StateType[], action: ActionType): StateType[] => {
     default:
       return state;
   }
+	localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
@@ -62,58 +63,35 @@ export const DiaryDispatchContext = React.createContext({
   onRemove: (targetId: number) => {},
   onEdit: (data: StateType) => {},
 });
-
-const dummyData = [
-	{
-		id: 1,
-		date: 1698562548201, 
-		content: "일기1",
-		emotion: 1
-	},
-	{
-		id: 2,
-		date: 1698562548202, 
-		content: "일기2",
-		emotion: 2
-	},
-	{
-		id: 3,
-		date: 1698562548203, 
-		content: "일기3",
-		emotion: 3
-	},
-	{
-		id: 4,
-		date: 1698562548204, 
-		content: "일기4",
-		emotion: 4
-	},
-	{
-		id: 5,
-		date: 1698562548205, 
-		content: "일기5",
-		emotion: 5
-	},
-];
 // console.log(new Date().getTime()); // 데이트타임의 밀리세컨즈 값
 
 function App() {
   const initialData: StateType[] = [];
-  const [data, dispatch] = useReducer(reducer, dummyData);
+  const [data, dispatch] = useReducer(reducer, initialData);
+
+	useEffect(()=>{
+		const diary = localStorage.getItem("diary");
+		if(diary) {  // 등록된 일기가 있는 경우
+			const diaryObj = JSON.parse(diary);
+			dispatch({type: "INIT", data: diaryObj});
+			dataId.current = diaryObj.sort((a: StateType, b: StateType) => b.id - a.id)[0].id+1;
+			// console.log(diary);
+		}
+	},[]);
 
   // dispatch 함수
-  const dataId = useRef(0);
+  const dataId = useRef(0); // 생성시 id 값은 state 초기데이터 dummyData 의 id 와 중복되지 않도록 생성하기. // 중복되는 경우 EDIT 수정을 할때, id 중복된 일기데이터의 수정값을 모두 동일하게 변경되서 마치 동일한 일기가 생성된 것 처럼 보이는 문제발생
   const onCreate = ({ date, content, emotion }: Omit<StateType, "id">) => {
     dispatch({
       type: "CREATE",
       data: {
-        id: dataId.current,
+        id: dataId.current, // id 0부터
         date: new Date(date).getTime(),
         content,
         emotion,
       },
     }); // content: content , emotion: emotion
-    dataId.current += 1;
+    dataId.current += 1; 
   };
 
   const onRemove = (targetId: number) => {
