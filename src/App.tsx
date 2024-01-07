@@ -73,8 +73,11 @@ function App() {
 		const diary = localStorage.getItem("diary");
 		if(diary) {  // 등록된 일기가 있는 경우
 			const diaryObj = JSON.parse(diary);
-			dispatch({type: "INIT", data: diaryObj});
-			dataId.current = diaryObj.sort((a: StateType, b: StateType) => b.id - a.id)[0].id+1;
+			const diaryList = diaryObj.sort((a: StateType, b: StateType) => b.id - a.id);
+			if(diaryList.length>=1) {
+				dataId.current = diaryList[0].id+1;
+				dispatch({type: "INIT", data: diaryObj});
+			}
 		}
 	},[]);
 
