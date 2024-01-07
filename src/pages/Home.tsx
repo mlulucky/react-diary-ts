@@ -37,12 +37,15 @@ const Home = () => {
       const firstDay = new Date(
         curDate.getFullYear(),
         curDate.getMonth(),
-        1
+        1 // 월의 첫번째 날
       ).getTime(); // 해당월의 첫쨋날
       const lastDay = new Date(
         curDate.getFullYear(),
-        curDate.getMonth() + 1,
-        0
+        curDate.getMonth() + 1, // 다음달
+        0, // 이전 월의 마지막날
+        23, // 시간 23시
+        59, // 분
+        59 // 초
       ).getTime(); // 해당월의 마지막날
       // 해당월의 첫째날, 마지막째날을 이용해 filter 로 해당 월에 해당되는 일기목록 데이터 반환하기
 
@@ -55,10 +58,6 @@ const Home = () => {
     }
   }, [diaryList, curDate]); // 🍒 diaryList 일기목록에 일기가 추가, 삭제 되었을때도 리스트를 새로 업데이트 setData 해야하므로, 의존배열에 diaryList 도 추가한다.
 
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-
   return (
     <div>
       <MyHeader
@@ -66,7 +65,7 @@ const Home = () => {
         leftChild={<MyButton text="<" onClick={decreaseMonth} />}
         rightChild={<MyButton text=">" onClick={increaseMonth} />}
       />
-			<DiaryContainer diaryList={data}/>
+      <DiaryContainer diaryList={data} />
     </div>
   );
 };
