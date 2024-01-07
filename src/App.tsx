@@ -75,7 +75,6 @@ function App() {
 			const diaryObj = JSON.parse(diary);
 			dispatch({type: "INIT", data: diaryObj});
 			dataId.current = diaryObj.sort((a: StateType, b: StateType) => b.id - a.id)[0].id+1;
-			// console.log(diary);
 		}
 	},[]);
 

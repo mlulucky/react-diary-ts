@@ -9,7 +9,7 @@ const useDiary = () => {
 	const [diary, setDiary] = useState<StateType>();
 
 	useEffect(()=>{
-		if(diaryList.length > 1) {
+		if(diaryList.length >= 1) {
 			const diary = diaryList.find((item)=> item.id === parseInt(id!));
 			// console.log(diary);
 			if(diary) { // 일기가 존재할때
